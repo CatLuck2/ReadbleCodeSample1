@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Ig2-Zi-ZmU">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="ReadbleCodeSample1" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="MLa-33-QFf">
+                                <rect key="frame" x="0.0" y="44" width="375" height="623"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="MLa-33-QFf" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="1Ry-Wt-E5r"/>
+                            <constraint firstItem="MLa-33-QFf" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="dDy-Ib-Bxm"/>
+                            <constraint firstItem="MLa-33-QFf" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="e35-5p-db6"/>
+                            <constraint firstItem="MLa-33-QFf" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="q30-zE-cgQ"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="QJk-Mj-015">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="1EM-88-b4D">
+                            <connections>
+                                <segue destination="wCI-mt-9mx" kind="show" id="RfK-OX-5jC"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="tableView" destination="MLa-33-QFf" id="2Fx-MF-f53"/>
+                        <segue destination="qCd-fd-CdG" kind="show" identifier="display" id="MHK-0I-pLg"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="757.60000000000002" y="132.68365817091455"/>
+        </scene>
+        <!--Display Memo-->
+        <scene sceneID="oPg-O9-COy">
+            <objects>
+                <viewController id="qCd-fd-CdG" customClass="DisplayMemo" customModule="ReadbleCodeSample1" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ZDq-UD-7Jt">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="qbR-OC-7pG">
+                                <rect key="frame" x="0.0" y="44" width="375" height="623"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="qbR-OC-7pG" firstAttribute="leading" secondItem="7HJ-SD-xao" secondAttribute="leading" id="AJi-mR-zXB"/>
+                            <constraint firstItem="qbR-OC-7pG" firstAttribute="trailing" secondItem="7HJ-SD-xao" secondAttribute="trailing" id="UsM-mq-12s"/>
+                            <constraint firstItem="qbR-OC-7pG" firstAttribute="top" secondItem="7HJ-SD-xao" secondAttribute="top" id="YuW-gG-XcX"/>
+                            <constraint firstItem="qbR-OC-7pG" firstAttribute="bottom" secondItem="7HJ-SD-xao" secondAttribute="bottom" id="gHZ-cI-pIH"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="7HJ-SD-xao"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="hvh-ba-UiM">
+                        <barButtonItem key="rightBarButtonItem" title="編集" id="3Dx-Rw-mdi">
+                            <connections>
+                                <segue destination="Ten-cT-NU2" kind="show" identifier="edit" id="ylX-pR-OMa"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="memoTextView" destination="qbR-OC-7pG" id="MBM-tD-Ifx"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nxY-7F-JPd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1558" y="563"/>
+        </scene>
+        <!--Edit Memo-->
+        <scene sceneID="epf-Uz-wxg">
+            <objects>
+                <viewController id="Ten-cT-NU2" customClass="EditMemo" customModule="ReadbleCodeSample1" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ic0-1s-4Qj">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="dem-z4-4nz">
+                                <rect key="frame" x="0.0" y="44" width="375" height="623"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <gestureRecognizers/>
+                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="rAo-3d-Kau" appends="YES" id="vXs-BY-gUl"/>
+                                </connections>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="dem-z4-4nz" firstAttribute="leading" secondItem="obF-mC-HoK" secondAttribute="leading" id="DfO-28-bcx"/>
+                            <constraint firstItem="dem-z4-4nz" firstAttribute="top" secondItem="obF-mC-HoK" secondAttribute="top" id="UOV-xa-fQQ"/>
+                            <constraint firstItem="dem-z4-4nz" firstAttribute="bottom" secondItem="obF-mC-HoK" secondAttribute="bottom" id="kGL-ka-y51"/>
+                            <constraint firstItem="dem-z4-4nz" firstAttribute="trailing" secondItem="obF-mC-HoK" secondAttribute="trailing" id="sm0-pe-KrO"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="obF-mC-HoK"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="CVN-9W-eXU">
+                        <barButtonItem key="rightBarButtonItem" title="完了" id="5Td-fz-sZy">
+                            <connections>
+                                <action selector="complete:" destination="Ten-cT-NU2" id="mE8-8a-wag"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="memoTextView" destination="dem-z4-4nz" id="yBJ-Uw-JYp"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BU9-gn-ekS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="rAo-3d-Kau">
+                    <connections>
+                        <action selector="gesture:" destination="Ten-cT-NU2" id="4Bj-1f-RUs"/>
+                    </connections>
+                </pongPressGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="2316" y="567.16641679160421"/>
+        </scene>
+        <!--Add Memo-->
+        <scene sceneID="ulS-yO-rgo">
+            <objects>
+                <viewController id="wCI-mt-9mx" customClass="AddMemo" customModule="ReadbleCodeSample1" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="qKB-QM-S4v">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="eS7-dm-iII">
+                                <rect key="frame" x="0.0" y="44" width="375" height="623"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <gestureRecognizers/>
+                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="de2-Ii-1fg" appends="YES" id="9ZG-Ll-zFT"/>
+                                </connections>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="eS7-dm-iII" firstAttribute="trailing" secondItem="X49-Hh-Wcg" secondAttribute="trailing" id="M2e-Nz-VhM"/>
+                            <constraint firstItem="eS7-dm-iII" firstAttribute="bottom" secondItem="X49-Hh-Wcg" secondAttribute="bottom" id="YN8-Sq-YMm"/>
+                            <constraint firstItem="eS7-dm-iII" firstAttribute="top" secondItem="X49-Hh-Wcg" secondAttribute="top" id="a6y-Ek-Q6R"/>
+                            <constraint firstItem="eS7-dm-iII" firstAttribute="leading" secondItem="X49-Hh-Wcg" secondAttribute="leading" id="ksR-Cx-jvz"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="X49-Hh-Wcg"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="UO9-ld-Dy3">
+                        <barButtonItem key="rightBarButtonItem" title="保存" id="aFQ-Hx-85G">
+                            <connections>
+                                <action selector="leftButton:" destination="wCI-mt-9mx" id="1bu-bq-Ce8"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="memoTextView" destination="eS7-dm-iII" id="eDO-wN-Yfc"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Zby-Hp-ooR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="de2-Ii-1fg">
+                    <connections>
+                        <action selector="gesture:" destination="wCI-mt-9mx" id="b8Z-Vy-dJI"/>
+                    </connections>
+                </pongPressGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="1560.8" y="-135.38230884557723"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Z4Z-PE-rD4">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Ig2-Zi-ZmU" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="BX3-0k-zzC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="85Y-DC-Fjp"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3dR-du-nXw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-13.6" y="132.68365817091455"/>
+        </scene>
+    </scenes>
+</document>
