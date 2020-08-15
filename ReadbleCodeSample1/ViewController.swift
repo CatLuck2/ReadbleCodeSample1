@@ -13,6 +13,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     
     @IBOutlet weak var tableView: UITableView!
     
+    
     var list:Results<MemoObject>!
     var text = [NSAttributedString]()
     
