@@ -56,10 +56,10 @@ extension EditMemo: UIImagePickerControllerDelegate, UINavigationControllerDeleg
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[.originalImage] as? UIImage {
-            let pickerImage = image.resized(withPercentage: 0.5)!
-            let fullString = NSMutableAttributedString(string: memoTextView.text)
+            let fullString = NSMutableAttributedString(attributedString: memoTextView.attributedText)
+            let pickerImage = image.resized(withPercentage: 0.1)!
             let imageWidth = pickerImage.size.width
-            let padding: CGFloat = self.view.frame.width / 8
+            let padding: CGFloat = self.view.frame.width / 2
             let scaleFactor = imageWidth / (memoTextView.frame.size.width - padding)
             let imageAttachment = NSTextAttachment()
             imageAttachment.image = UIImage(cgImage: pickerImage.cgImage!, scale: scaleFactor, orientation: pickerImage.imageOrientation)
