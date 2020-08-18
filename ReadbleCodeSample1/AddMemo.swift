@@ -9,7 +9,7 @@
 import UIKit
 import RealmSwift
 
-class MemoObject: Object {
+class MemoModel: Object {
     @objc dynamic var data: Data!
     @objc dynamic var identifier: String!
 }
@@ -18,31 +18,31 @@ class AddMemo: UIViewController {
     
     @IBOutlet private weak var memoTextView: UITextView!
     
-    let picker = UIImagePickerController()
+    let imagePicker = UIImagePickerController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        picker.delegate = self
-        picker.sourceType = .photoLibrary
+        imagePicker.delegate = self
+        imagePicker.sourceType = .photoLibrary
     }
     
-    @IBAction func leftButton(_ sender: Any) {
+    @IBAction func addMemo(_ sender: Any) {
         let realm = try! Realm()
-        let memo: MemoObject = MemoObject()
-        let data = try! NSKeyedArchiver.archivedData(withRootObject: memoTextView.attributedText!, requiringSecureCoding: false)
-        memo.data = data
-        memo.identifier = String().randomString()
+        let memoObject: MemoModel = MemoModel()
+        let archivedAttributedText = try! NSKeyedArchiver.archivedData(withRootObject: memoTextView.attributedText!, requiringSecureCoding: false)
+        memoObject.data = archivedAttributedText
+        memoObject.identifier = String().randomString()
         try! realm.write{
-            realm.add(memo)
+            realm.add(memoObject)
         }
         self.navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func gesture(_ sender: UILongPressGestureRecognizer) {
+    @IBAction func attachImageGesture(_ sender: UILongPressGestureRecognizer) {
         let alert = UIAlertController(title: "画像を添付", message: nil, preferredStyle: .actionSheet)
         let action = UIAlertAction(title: "OK", style: .default) { (action) in
             self.dismiss(animated: true, completion: nil)
-            self.present(self.picker, animated: true, completion: nil)
+            self.present(self.imagePicker, animated: true, completion: nil)
         }
         let cancel = UIAlertAction(title: "キャンセル", style: .cancel, handler: nil)
         alert.addAction(action)
@@ -67,17 +67,17 @@ extension String {
 extension AddMemo: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let image = info[.originalImage] as? UIImage {
-            let fullString = NSMutableAttributedString(attributedString: memoTextView.attributedText)
-            let pickerImage = image.resized(withPercentage: 0.1)!
-            let imageWidth = pickerImage.size.width
+        if let pickerImage = info[.originalImage] as? UIImage {
+            let mutAttrMemoText = NSMutableAttributedString(attributedString: memoTextView.attributedText)
+            let resizedImage = pickerImage.resizeImage(withPercentage: 0.1)!
+            let width = pickerImage.size.width
             let padding: CGFloat = self.view.frame.width / 2
-            let scaleFactor = imageWidth / (memoTextView.frame.size.width - padding)
+            let scaleRate = width / (memoTextView.frame.size.width - padding)
             let imageAttachment = NSTextAttachment()
-            imageAttachment.image = UIImage(cgImage: pickerImage.cgImage!, scale: scaleFactor, orientation: pickerImage.imageOrientation)
-            let imageString = NSAttributedString(attachment: imageAttachment)
-            fullString.append(imageString)
-            memoTextView.attributedText = fullString
+            imageAttachment.image = UIImage(cgImage: resizedImage.cgImage!, scale: scaleRate, orientation: resizedImage.imageOrientation)
+            let imageAttributedString = NSAttributedString(attachment: imageAttachment)
+            mutAttrMemoText.append(imageAttributedString)
+            memoTextView.attributedText = mutAttrMemoText
         }
         dismiss(animated: true, completion: nil)
     }

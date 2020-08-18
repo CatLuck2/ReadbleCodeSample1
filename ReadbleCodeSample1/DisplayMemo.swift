@@ -13,22 +13,21 @@ class DisplayMemo: UIViewController {
     
     @IBOutlet weak var memoTextView: UITextView!
     
-    var list:Results<MemoObject>!
-    var memo: MemoObject = MemoObject()
-    var text = NSAttributedString()
-    var indexPath: Int!
+    var selectedMemoObject: MemoModel = MemoModel()
+    var selectedMemo_attributedText = NSAttributedString()
+    var selectedIndexPathRow: Int!
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        memoTextView.attributedText = text
+        memoTextView.attributedText = selectedMemo_attributedText
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "edit" {
             let vc = segue.destination as! EditMemo
-            vc.memoObject = memo
-            vc.text = memoTextView.attributedText
-            vc.indexPath = indexPath
+            vc.selectedMemoObject = selectedMemoObject
+            vc.selectedMemo_attributedText = memoTextView.attributedText
+            vc.selectedIndexPathRow = selectedIndexPathRow
         }
     }
     

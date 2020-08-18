@@ -37,7 +37,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="tableView" destination="MLa-33-QFf" id="2Fx-MF-f53"/>
+                        <outlet property="memoTableView" destination="MLa-33-QFf" id="Xbb-kx-dhq"/>
                         <segue destination="qCd-fd-CdG" kind="show" identifier="display" id="MHK-0I-pLg"/>
                     </connections>
                 </viewController>
@@ -117,7 +117,7 @@
                     <navigationItem key="navigationItem" id="CVN-9W-eXU">
                         <barButtonItem key="rightBarButtonItem" title="完了" id="5Td-fz-sZy">
                             <connections>
-                                <action selector="complete:" destination="Ten-cT-NU2" id="mE8-8a-wag"/>
+                                <action selector="updateMemo:" destination="Ten-cT-NU2" id="O7v-dY-rTv"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -128,7 +128,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BU9-gn-ekS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="rAo-3d-Kau">
                     <connections>
-                        <action selector="gesture:" destination="Ten-cT-NU2" id="4Bj-1f-RUs"/>
+                        <action selector="attachImageGesture:" destination="Ten-cT-NU2" id="W1G-Ky-RUu"/>
                     </connections>
                 </pongPressGestureRecognizer>
             </objects>
@@ -166,7 +166,7 @@
                     <navigationItem key="navigationItem" id="UO9-ld-Dy3">
                         <barButtonItem key="rightBarButtonItem" title="保存" id="aFQ-Hx-85G">
                             <connections>
-                                <action selector="leftButton:" destination="wCI-mt-9mx" id="1bu-bq-Ce8"/>
+                                <action selector="addMemo:" destination="wCI-mt-9mx" id="h41-cA-BBE"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -177,7 +177,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zby-Hp-ooR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="de2-Ii-1fg">
                     <connections>
-                        <action selector="gesture:" destination="wCI-mt-9mx" id="b8Z-Vy-dJI"/>
+                        <action selector="attachImageGesture:" destination="wCI-mt-9mx" id="syx-pG-liv"/>
                     </connections>
                 </pongPressGestureRecognizer>
             </objects>

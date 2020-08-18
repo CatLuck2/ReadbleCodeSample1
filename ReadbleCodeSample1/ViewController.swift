@@ -2,7 +2,7 @@
 //  ViewController.swift
 //  ReadbleCodeSample1
 //
-//  Created by Nekokichi on 2020/08/14.
+//  Created by Nekokichi on 2020/08/14.2
 //  Copyright © 2020 Nekokichi. All rights reserved.
 //
 
@@ -11,34 +11,34 @@ import RealmSwift
 
 class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var memoTableView: UITableView!
     
-    var list:Results<MemoObject>!
-    var text = [NSAttributedString]()
+    var memoList:Results<MemoModel>!
+    var attributedTextArray = [NSAttributedString]()
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let realm = try! Realm()
-        text = [NSAttributedString]()
-        list = realm.objects(MemoObject.self)
-        if list.count > 0 {
-            for i in 0...list.count-1 {
-                let attributeText = try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(list![i].data) as! NSAttributedString
-                text.append(attributeText)
+        attributedTextArray = [NSAttributedString]()
+        memoList = realm.objects(MemoModel.self)
+        if memoList.count > 0 {
+            for i in 0...memoList.count-1 {
+                let attributeText = try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(memoList![i].data) as! NSAttributedString
+                attributedTextArray.append(attributeText)
             }
         }
-        tableView.reloadData()
+        memoTableView.reloadData()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(UINib(nibName: "CustomCell", bundle: nil), forCellReuseIdentifier: "customcell")
+        memoTableView.delegate = self
+        memoTableView.dataSource = self
+        memoTableView.register(UINib(nibName: "CustomCell", bundle: nil), forCellReuseIdentifier: "customcell")
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return list.count
+        return memoList.count
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -47,7 +47,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "customcell", for: indexPath) as! CustomCell
-        cell.label.text = text[indexPath.row].string
+        cell.label.text = attributedTextArray[indexPath.row].string
         return cell
     }
     
@@ -57,9 +57,9 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         let realm = try! Realm()
-        let object = list[indexPath.row]
+        let selectedMemo = memoList[indexPath.row]
         try! realm.write() {
-            realm.delete(object)
+            realm.delete(selectedMemo)
         }
         tableView.reloadData()
     }
@@ -67,9 +67,9 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "display" {
             let vc = segue.destination as! DisplayMemo
-            vc.memo = list[tableView.indexPathForSelectedRow!.row]
-            vc.text = text[tableView.indexPathForSelectedRow!.row]
-            vc.indexPath = tableView.indexPathForSelectedRow?.row
+            vc.selectedMemoObject = memoList[memoTableView.indexPathForSelectedRow!.row]
+            vc.selectedMemo_attributedText = attributedTextArray[memoTableView.indexPathForSelectedRow!.row]
+            vc.selectedIndexPathRow = memoTableView.indexPathForSelectedRow?.row
         }
     }
 
