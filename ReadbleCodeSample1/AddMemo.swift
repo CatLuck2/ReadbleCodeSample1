@@ -17,7 +17,7 @@ class MemoModel: Object {
 class AddMemo: UIViewController {
     
     @IBOutlet private weak var memoTextView: UITextView!
-    
+    let realm       = try! Realm()
     let imagePicker = UIImagePickerController()
     
     override func viewDidLoad() {
@@ -27,14 +27,20 @@ class AddMemo: UIViewController {
     }
     
     @IBAction func addMemo(_ sender: Any) {
-        let realm = try! Realm()
-        let memoObject: MemoModel = MemoModel()
+        //必要な変数を宣言
+        let memoObject             = MemoModel()
         let archivedAttributedText = try! NSKeyedArchiver.archivedData(withRootObject: memoTextView.attributedText!, requiringSecureCoding: false)
-        memoObject.data = archivedAttributedText
+        
+        //入力値を代入
+        memoObject.data       = archivedAttributedText
         memoObject.identifier = String().randomString()
+        
+        //データを追加
         try! realm.write{
             realm.add(memoObject)
         }
+        
+        //ViewControllerに戻る
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -54,10 +60,13 @@ class AddMemo: UIViewController {
 
 extension String {
     func randomString() -> String {
-        let characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-        var len = Int()
+        //乱数生成に必要な変数群
+        let characters       = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        var len              = Int()
         var randomCharacters = String()
-        for _ in 1...9 {            len = Int(arc4random_uniform(UInt32(characters.count)))
+        //乱数を生成
+        for _ in 1...9 {
+            len = Int(arc4random_uniform(UInt32(characters.count)))
             randomCharacters += String(characters[characters.index(characters.startIndex,offsetBy: len)])
         }
         return randomCharacters
@@ -68,17 +77,27 @@ extension AddMemo: UIImagePickerControllerDelegate, UINavigationControllerDelega
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let pickerImage = info[.originalImage] as? UIImage {
-            let mutAttrMemoText = NSMutableAttributedString(attributedString: memoTextView.attributedText)
-            let resizedImage = pickerImage.resizeImage(withPercentage: 0.1)!
-            let width = pickerImage.size.width
-            let padding: CGFloat = self.view.frame.width / 2
-            let scaleRate = width / (memoTextView.frame.size.width - padding)
-            let imageAttachment = NSTextAttachment()
+            //画像の圧縮やサイズ調整に必要な値
+            let width                 = pickerImage.size.width
+            let padding               = self.view.frame.width / 2
+            let scaleRate             = width / (memoTextView.frame.size.width - padding)
+            //圧縮した画像
+            let resizedImage          = pickerImage.resizeImage(withPercentage: 0.1)!
+            //インスタンスの宣言
+            let imageAttachment       = NSTextAttachment()
+            var imageAttributedString = NSAttributedString()
+            //memoTextViewのテキストをAttributedStringに変換
+            let mutAttrMemoText       = NSMutableAttributedString(attributedString: memoTextView.attributedText)
+            
+            //画像をNSAttributedStringに変換
             imageAttachment.image = UIImage(cgImage: resizedImage.cgImage!, scale: scaleRate, orientation: resizedImage.imageOrientation)
-            let imageAttributedString = NSAttributedString(attachment: imageAttachment)
+            imageAttributedString = NSAttributedString(attachment: imageAttachment)
             mutAttrMemoText.append(imageAttributedString)
+            
+            //画像を追加したAttributedStringをmemoTextViewに追加
             memoTextView.attributedText = mutAttrMemoText
         }
+        //imagePickerを閉じる
         dismiss(animated: true, completion: nil)
     }
 

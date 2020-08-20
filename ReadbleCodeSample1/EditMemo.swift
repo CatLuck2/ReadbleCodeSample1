@@ -13,18 +13,26 @@ class EditMemo: UIViewController {
     
     @IBOutlet weak var memoTextView: UITextView!
     
-    let imagePicker = UIImagePickerController()
+    //Realmのインスタンス、Realmのデータを受け取る変数
     var memoList:Results<MemoModel>!
-    var selectedMemoObject: MemoModel = MemoModel()
+    let realm                       = try! Realm()
+    //imagePickerのインスタンス
+    let imagePicker                 = UIImagePickerController()
+    //DisplayMemoから値を受け取る変数群
+    var selectedMemoObject          = MemoModel()
     var selectedMemo_attributedText = NSAttributedString()
-    var selectedIndexPathRow: Int!
+    var selectedIndexPathRow        = Int()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        imagePicker.delegate = self
+        //imagePickerの設定
+        imagePicker.delegate   = self
         imagePicker.sourceType = .photoLibrary
-        let realm = try! Realm()
+        
+        //Realmからデータを取得、
         memoList = realm.objects(MemoModel.self)
+        
+        //memoTextViewにDisplayMemoから渡されたデータを代入
         memoTextView.attributedText = selectedMemo_attributedText
     }
     
@@ -41,12 +49,17 @@ class EditMemo: UIViewController {
     }
     
     @IBAction func updateMemo(_ sender: Any) {
-        let realm = try! Realm()
+        //編集したデータ
         let data2 = try! NSKeyedArchiver.archivedData(withRootObject: memoTextView.attributedText!, requiringSecureCoding: false)
-        let memo = realm.objects(MemoModel.self).filter("identifier == %@", selectedMemoObject.identifier!)
+        //Realm内にある編集した元データの指定先
+        let memo  = realm.objects(MemoModel.self).filter("identifier == %@", selectedMemoObject.identifier!)
+        
+        //Realmに書き込み
         try! realm.write {
             memo.setValue(data2, forKey: "data")
         }
+        
+        //ViewControllerに戻る
         self.navigationController?.popToRootViewController(animated: true)
     }
         
@@ -56,18 +69,27 @@ extension EditMemo: UIImagePickerControllerDelegate, UINavigationControllerDeleg
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let pickerImage = info[.originalImage] as? UIImage {
-            let mutAttrMemoText = NSMutableAttributedString(attributedString: memoTextView.attributedText)
-            let resizedImage = pickerImage.resizeImage(withPercentage: 0.1)!
-
-            let width = pickerImage.size.width
-            let padding: CGFloat = self.view.frame.width / 2
-            let scaleRate = width / (memoTextView.frame.size.width - padding)
-            let imageAttachment = NSTextAttachment()
+            //画像の圧縮やサイズ調整に必要な値
+            let width                 = pickerImage.size.width
+            let padding               = self.view.frame.width / 2
+            let scaleRate             = width / (memoTextView.frame.size.width - padding)
+            //圧縮した画像
+            let resizedImage          = pickerImage.resizeImage(withPercentage: 0.1)!
+            //インスタンスの宣言
+            let imageAttachment       = NSTextAttachment()
+            var imageAttributedString = NSAttributedString()
+            //memoTextViewのテキストをAttributedStringに変換
+            let mutAttrMemoText       = NSMutableAttributedString(attributedString: memoTextView.attributedText)
+            
+            //画像をNSAttributedStringに変換
             imageAttachment.image = UIImage(cgImage: resizedImage.cgImage!, scale: scaleRate, orientation: resizedImage.imageOrientation)
-            let imageAttributedString = NSAttributedString(attachment: imageAttachment)
+            imageAttributedString = NSAttributedString(attachment: imageAttachment)
             mutAttrMemoText.append(imageAttributedString)
+            
+            //画像を追加したAttributedStringをmemoTextViewに追加
             memoTextView.attributedText = mutAttrMemoText
         }
+        //imagePickerを閉じる
         dismiss(animated: true, completion: nil)
     }
 

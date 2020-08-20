@@ -12,10 +12,10 @@ import RealmSwift
 class DisplayMemo: UIViewController {
     
     @IBOutlet weak var memoTextView: UITextView!
-    
-    var selectedMemoObject: MemoModel = MemoModel()
+    //ViewControllerから値を受け取る変数群
+    var selectedMemoObject          = MemoModel()
     var selectedMemo_attributedText = NSAttributedString()
-    var selectedIndexPathRow: Int!
+    var selectedIndexPathRow        = Int()
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -24,10 +24,12 @@ class DisplayMemo: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "edit" {
+            //EditMemoのインスタンスを生成
             let vc = segue.destination as! EditMemo
-            vc.selectedMemoObject = selectedMemoObject
+            //EditMemoのプロパティに代入
+            vc.selectedMemoObject          = selectedMemoObject
             vc.selectedMemo_attributedText = memoTextView.attributedText
-            vc.selectedIndexPathRow = selectedIndexPathRow
+            vc.selectedIndexPathRow        = selectedIndexPathRow
         }
     }
     
