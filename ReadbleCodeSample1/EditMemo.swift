@@ -37,14 +37,19 @@ class EditMemo: UIViewController {
     }
     
     @IBAction func attachImageGesture(_ sender: UILongPressGestureRecognizer) {
+        //アラート
         let alert = UIAlertController(title: "画像を添付", message: nil, preferredStyle: .actionSheet)
+        //アクション
         let action = UIAlertAction(title: "OK", style: .default) { (action) in
             self.dismiss(animated: true, completion: nil)
             self.present(self.imagePicker, animated: true, completion: nil)
         }
+        //キャンセル
         let cancel = UIAlertAction(title: "キャンセル", style: .cancel, handler: nil)
+        //アラートアクションを追加
         alert.addAction(action)
         alert.addAction(cancel)
+        //表示
         present(alert, animated: true, completion: nil)
     }
     
@@ -59,7 +64,7 @@ class EditMemo: UIViewController {
             memo.setValue(data2, forKey: "data")
         }
         
-        //ViewControllerに戻る
+        //戻る
         self.navigationController?.popToRootViewController(animated: true)
     }
         
@@ -102,7 +107,9 @@ extension EditMemo: UIImagePickerControllerDelegate, UINavigationControllerDeleg
 extension UIImage {
     //データサイズを変更する
     func resizeImage(withPercentage percentage: CGFloat) -> UIImage? {
+        //指定したパーセンテージの割合で画像を拡大/縮小する
         let canvas = CGSize(width: size.width * percentage, height: size.height * percentage)
+        //リサイズ後の画像を返す
         return UIGraphicsImageRenderer(size: canvas, format: imageRendererFormat).image {
             _ in draw(in: CGRect(origin: .zero, size: canvas))
         }

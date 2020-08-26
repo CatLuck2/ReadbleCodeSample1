@@ -19,12 +19,14 @@ class DisplayMemo: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        //前画面で選択されたメモのテキストを表示
         memoTextView.attributedText = selectedMemo_attributedText
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "edit" {
-            //EditMemoのインスタンスを生成
+            //EditMemoのインスタンス
             let vc = segue.destination as! EditMemo
             //EditMemoのプロパティに代入
             vc.selectedMemoObject          = selectedMemoObject

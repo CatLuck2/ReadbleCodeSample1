@@ -12,8 +12,12 @@ import RealmSwift
 class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     @IBOutlet weak var memoTableView: UITableView!
+    
+    //メモリスト
     var memoList:Results<MemoModel>!
+    //Realm
     let realm               = try! Realm()
+    //保存用の配列
     var attributedTextArray = [NSAttributedString]()
     
     override func viewWillAppear(_ animated: Bool) {
@@ -23,7 +27,8 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         //データ取得
         memoList            = realm.objects(MemoModel.self)
         
-        //データをNSAttributedStringに変換
+        //Realmから取得したデータをAttributedStringに変換していって
+        //attributedTextArrayに追加していく
         if memoList.count > 0 {
             for i in 0...memoList.count-1 {
                 let attributeText = try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(memoList![i].data) as! NSAttributedString
@@ -65,7 +70,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         //選択したメモのデータ
         let selectedMemo = memoList[indexPath.row]
-        //Realmから削除
+        //TableViewで選択したメモのデータをRealmから削除する
         try! realm.write() {
             realm.delete(selectedMemo)
         }
