@@ -13,58 +13,47 @@ class EditMemo: UIViewController {
     
     @IBOutlet weak var memoTextView: UITextView!
     
-    //Realmのインスタンス、Realmのデータを受け取る変数
-    var memoList:Results<MemoModel>!
+    // Realm
     let realm                       = try! Realm()
-    //imagePickerのインスタンス
     let imagePicker                 = UIImagePickerController()
-    //DisplayMemoから値を受け取る変数群
+    // ViewControllerで選択されたメモのデータ群
     var selectedMemoObject          = MemoModel()
-    var selectedMemo_attributedText = NSAttributedString()
+    var selectedMemoString          = NSAttributedString()
     var selectedIndexPathRow        = Int()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //imagePickerの設定
+
         imagePicker.delegate   = self
         imagePicker.sourceType = .photoLibrary
         
-        //Realmからデータを取得、
-        memoList = realm.objects(MemoModel.self)
-        
-        //memoTextViewにDisplayMemoから渡されたデータを代入
-        memoTextView.attributedText = selectedMemo_attributedText
+        memoTextView.attributedText = selectedMemoString
     }
     
+    // 長押しタップ -> アラート表示 -> ImagePicker起動
     @IBAction func attachImageGesture(_ sender: UILongPressGestureRecognizer) {
-        //アラート
         let alert = UIAlertController(title: "画像を添付", message: nil, preferredStyle: .actionSheet)
-        //アクション
-        let action = UIAlertAction(title: "OK", style: .default) { (action) in
-            self.dismiss(animated: true, completion: nil)
+        let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
             self.present(self.imagePicker, animated: true, completion: nil)
         }
-        //キャンセル
-        let cancel = UIAlertAction(title: "キャンセル", style: .cancel, handler: nil)
-        //アラートアクションを追加
-        alert.addAction(action)
-        alert.addAction(cancel)
-        //表示
+        let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel, handler: nil)
+        alert.addAction(okAction)
+        alert.addAction(cancelAction)
         present(alert, animated: true, completion: nil)
     }
     
     @IBAction func updateMemo(_ sender: Any) {
-        //編集したデータ
-        let data2 = try! NSKeyedArchiver.archivedData(withRootObject: memoTextView.attributedText!, requiringSecureCoding: false)
-        //Realm内にある編集した元データの指定先
-        let memo  = realm.objects(MemoModel.self).filter("identifier == %@", selectedMemoObject.identifier!)
+        // memoTextView.attributedText -> Data()
+        let editedMemoTextData = try! NSKeyedArchiver.archivedData(withRootObject: memoTextView.attributedText!, requiringSecureCoding: false)
+        // Realm内のデータを参照
+        let realmRef  = realm.objects(MemoModel.self).filter("identifier == %@", selectedMemoObject.identifier!)
         
-        //Realmに書き込み
+        // Realm-Update
         try! realm.write {
-            memo.setValue(data2, forKey: "data")
+            realmRef.setValue(editedMemoTextData, forKey: "data")
         }
         
-        //戻る
+        // Back to ViewContrller
         self.navigationController?.popToRootViewController(animated: true)
     }
         
@@ -74,27 +63,25 @@ extension EditMemo: UIImagePickerControllerDelegate, UINavigationControllerDeleg
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let pickerImage = info[.originalImage] as? UIImage {
-            //画像の圧縮やサイズ調整に必要な値
+            // NSAttributedStringへ変換に必要なパラメーター
             let width                 = pickerImage.size.width
             let padding               = self.view.frame.width / 2
             let scaleRate             = width / (memoTextView.frame.size.width - padding)
-            //圧縮した画像
+            // 10%に圧縮した画像
             let resizedImage          = pickerImage.resizeImage(withPercentage: 0.1)!
-            //インスタンスの宣言
             let imageAttachment       = NSTextAttachment()
             var imageAttributedString = NSAttributedString()
-            //memoTextViewのテキストをAttributedStringに変換
+            // memoTextView.attributedText -> NSMutableAttributedString
             let mutAttrMemoText       = NSMutableAttributedString(attributedString: memoTextView.attributedText)
             
-            //画像をNSAttributedStringに変換
+            // resizedImage -> NSAttributedString()
             imageAttachment.image = UIImage(cgImage: resizedImage.cgImage!, scale: scaleRate, orientation: resizedImage.imageOrientation)
             imageAttributedString = NSAttributedString(attachment: imageAttachment)
             mutAttrMemoText.append(imageAttributedString)
             
-            //画像を追加したAttributedStringをmemoTextViewに追加
+            // 画像を追加後のテキスト -> memoTextView.attributedText
             memoTextView.attributedText = mutAttrMemoText
         }
-        //imagePickerを閉じる
         dismiss(animated: true, completion: nil)
     }
 
@@ -105,11 +92,10 @@ extension EditMemo: UIImagePickerControllerDelegate, UINavigationControllerDeleg
 }
 
 extension UIImage {
-    //データサイズを変更する
     func resizeImage(withPercentage percentage: CGFloat) -> UIImage? {
-        //指定したパーセンテージの割合で画像を拡大/縮小する
+        // 圧縮後のサイズ情報
         let canvas = CGSize(width: size.width * percentage, height: size.height * percentage)
-        //リサイズ後の画像を返す
+        // return resized Image
         return UIGraphicsImageRenderer(size: canvas, format: imageRendererFormat).image {
             _ in draw(in: CGRect(origin: .zero, size: canvas))
         }
