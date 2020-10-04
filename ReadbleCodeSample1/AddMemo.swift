@@ -20,8 +20,8 @@ class AddMemo: UIViewController {
     @IBOutlet private weak var memoTextView: UITextView!
     
     // Realm
-    let realm       = try! Realm()
-    let imagePicker = UIImagePickerController()
+    private let realm       = try! Realm()
+    private let imagePicker = UIImagePickerController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +30,7 @@ class AddMemo: UIViewController {
         imagePicker.sourceType = .photoLibrary
     }
     
-    @IBAction func addMemo(_ sender: Any) {
+    @IBAction private func addMemo(_ sender: Any) {
         guard let inputAttrText = memoTextView.attributedText else {
             return
         }
@@ -49,7 +49,7 @@ class AddMemo: UIViewController {
     }
     
     // 長押しタップ -> アラート表示 -> ImagePicker起動
-    @IBAction func attachImageGesture(_ sender: UILongPressGestureRecognizer) {
+    @IBAction private func attachImageGesture(_ sender: UILongPressGestureRecognizer) {
         let alert = UIAlertController(title: "画像を添付", message: nil, preferredStyle: .actionSheet)
         let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
             self.present(self.imagePicker, animated: true, completion: nil)
@@ -63,7 +63,7 @@ class AddMemo: UIViewController {
 }
 
 extension String {
-    func randomString() -> String {
+    fileprivate func randomString() -> String {
         // 文字群
         let characters       = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
         // 文字列の長さ
