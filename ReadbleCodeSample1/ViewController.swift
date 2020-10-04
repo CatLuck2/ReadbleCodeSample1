@@ -11,14 +11,14 @@ import RealmSwift
 
 class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
-    @IBOutlet weak var memoTableView: UITableView!
+    @IBOutlet private weak var memoTableView: UITableView!
     
     // Realmへ保存用のメモリスト
-    var memoListForRealm:Results<MemoModel>!
+    private var memoListForRealm:Results<MemoModel>!
     // Realm
-    let realm               = try! Realm()
+    private let realm               = try! Realm()
     // メモリスト
-    var memoList            = [NSAttributedString]()
+    private var memoList            = [NSAttributedString]()
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
