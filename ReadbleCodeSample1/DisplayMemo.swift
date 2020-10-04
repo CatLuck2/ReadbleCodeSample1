@@ -13,9 +13,9 @@ final class DisplayMemo: UIViewController {
     
     @IBOutlet private weak var memoTextView: UITextView!
     // ViewControllerから値を受け取る
-    var selectedMemoObject          = MemoModel()
-    var selectedMemoString          = NSAttributedString()
-    var selectedIndexPathRow        = Int()
+    var selectedMemoObject          : MemoModel!
+    var selectedMemoString          : NSAttributedString!
+    var selectedIndexPathRow        : Int!
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

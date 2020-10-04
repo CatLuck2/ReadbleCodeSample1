@@ -52,12 +52,15 @@ final class AddMemo: UIViewController {
     // 長押しタップ -> アラート表示 -> ImagePicker起動
     @IBAction private func attachImageGesture(_ sender: UILongPressGestureRecognizer) {
         let alert = UIAlertController(title: "画像を添付", message: nil, preferredStyle: .actionSheet)
+
         let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
             self.present(self.imagePicker, animated: true, completion: nil)
         }
         alert.addAction(okAction)
+
         let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel, handler: nil)
         alert.addAction(cancelAction)
+        
         present(alert, animated: true, completion: nil)
     }
     
@@ -96,8 +99,7 @@ extension AddMemo: UIImagePickerControllerDelegate, UINavigationControllerDelega
             // resizedImage -> NSAttributedString()
             imageAttachment.image = UIImage(cgImage: resizedImage.cgImage!, scale: scaleRate, orientation: resizedImage.imageOrientation)
 
-            var imageAttributedString = NSAttributedString()
-            imageAttributedString = NSAttributedString(attachment: imageAttachment)
+            let imageAttributedString = NSAttributedString(attachment: imageAttachment)
 
             // memoTextView.attributedText -> NSMutableAttributedString()
             let mutAttrMemoString     = NSMutableAttributedString(attributedString: memoTextView.attributedText)

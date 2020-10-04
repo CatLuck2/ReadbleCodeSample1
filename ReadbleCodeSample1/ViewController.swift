@@ -18,7 +18,7 @@ final class ViewController: UIViewController,UITableViewDelegate,UITableViewData
     // Realm
     private let realm               = try! Realm()
     // メモリスト
-    private var memoList            = [NSAttributedString]()
+    private var memoList            :[NSAttributedString]!
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
