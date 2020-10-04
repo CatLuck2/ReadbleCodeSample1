@@ -37,8 +37,8 @@ final class AddMemo: UIViewController {
             return
         }
         // memoTextView.attributedText -> Data()
-        memoObject.data            = try! NSKeyedArchiver.archivedData(withRootObject: inputAttrText, requiringSecureCoding: false)
-        memoObject.identifier      = String().randomString()
+        memoObject.data       = try! NSKeyedArchiver.archivedData(withRootObject: inputAttrText, requiringSecureCoding: false)
+        memoObject.identifier = String().randomString()
         
         // Realm-Add
         try! realm.write{
@@ -90,12 +90,12 @@ extension AddMemo: UIImagePickerControllerDelegate, UINavigationControllerDelega
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let pickerImage = info[.originalImage] as? UIImage {
             
-            let width                 = pickerImage.size.width
-            let padding               = self.view.frame.width / 2
-            let scaleRate             = width / (memoTextView.frame.size.width - padding)
+            let width             = pickerImage.size.width
+            let padding           = self.view.frame.width / 2
+            let scaleRate         = width / (memoTextView.frame.size.width - padding)
             // 10%に圧縮した画像
-            let resizedImage          = pickerImage.resizeImage(withPercentage: 0.1)!
-            let imageAttachment       = NSTextAttachment()
+            let resizedImage      = pickerImage.resizeImage(withPercentage: 0.1)!
+            let imageAttachment   = NSTextAttachment()
             // resizedImage -> NSAttributedString()
             imageAttachment.image = UIImage(cgImage: resizedImage.cgImage!, scale: scaleRate, orientation: resizedImage.imageOrientation)
 

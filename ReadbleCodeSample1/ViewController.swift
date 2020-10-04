@@ -16,16 +16,16 @@ final class ViewController: UIViewController,UITableViewDelegate,UITableViewData
     // Realmへ保存用のメモリスト
     private var memoListForRealm:Results<MemoModel>!
     // Realm
-    private let realm               = try! Realm()
+    private let realm = try! Realm()
     // メモリスト
-    private var memoList            :[NSAttributedString]!
+    private var memoList:[NSAttributedString]!
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        memoList                    = [NSAttributedString]()
+        memoList         = [NSAttributedString]()
         // Realm-Read
-        memoListForRealm            = realm.objects(MemoModel.self)
+        memoListForRealm = realm.objects(MemoModel.self)
         
         // memoList[i]: memoListForRealm.data -> NSAttributedString
         // memoList[i] add to attributedTextArray
@@ -84,9 +84,9 @@ final class ViewController: UIViewController,UITableViewDelegate,UITableViewData
             guard let indexPathRow = memoTableView.indexPathForSelectedRow?.row else {
                 return
             }
-            vc.selectedMemoObject          = memoListForRealm[indexPathRow]
-            vc.selectedMemoString          = memoList[indexPathRow]
-            vc.selectedIndexPathRow        = indexPathRow
+            vc.selectedMemoObject   = memoListForRealm[indexPathRow]
+            vc.selectedMemoString   = memoList[indexPathRow]
+            vc.selectedIndexPathRow = indexPathRow
         }
     }
 

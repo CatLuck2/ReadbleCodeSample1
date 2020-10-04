@@ -13,9 +13,9 @@ final class DisplayMemo: UIViewController {
     
     @IBOutlet private weak var memoTextView: UITextView!
     // ViewControllerから値を受け取る
-    var selectedMemoObject          : MemoModel!
-    var selectedMemoString          : NSAttributedString!
-    var selectedIndexPathRow        : Int!
+    var selectedMemoObject  :MemoModel!
+    var selectedMemoString  :NSAttributedString!
+    var selectedIndexPathRow:Int!
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -26,10 +26,10 @@ final class DisplayMemo: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "edit" {
             // EditMemoに保持中のメモを渡す
-            let vc                         = segue.destination as! EditMemo
-            vc.selectedMemoObject          = selectedMemoObject
-            vc.selectedMemoString          = selectedMemoString
-            vc.selectedIndexPathRow        = selectedIndexPathRow
+            let vc                  = segue.destination as! EditMemo
+            vc.selectedMemoObject   = selectedMemoObject
+            vc.selectedMemoString   = selectedMemoString
+            vc.selectedIndexPathRow = selectedIndexPathRow
         }
     }
     

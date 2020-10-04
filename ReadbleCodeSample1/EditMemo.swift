@@ -14,12 +14,12 @@ final class EditMemo: UIViewController {
     @IBOutlet private weak var memoTextView: UITextView!
     
     // Realm
-    private let realm                       = try! Realm()
-    private let imagePicker                 = UIImagePickerController()
+    private let realm       = try! Realm()
+    private let imagePicker = UIImagePickerController()
     // ViewControllerで選択されたメモのデータ群
-    var selectedMemoObject          : MemoModel!
-    var selectedMemoString          : NSAttributedString!
-    var selectedIndexPathRow        : Int!
+    var selectedMemoObject  :MemoModel!
+    var selectedMemoString  :NSAttributedString!
+    var selectedIndexPathRow:Int!
     
     override func viewDidLoad() {
         super.viewDidLoad()
