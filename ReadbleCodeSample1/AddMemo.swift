@@ -31,11 +31,12 @@ class AddMemo: UIViewController {
     }
     
     @IBAction func addMemo(_ sender: Any) {
-        guard let inputAttrText = memoTextView.attributedText else { return }
+        guard let inputAttrText = memoTextView.attributedText else {
+            return
+        }
         let memoObject             = MemoModel()
         // memoTextView.attributedText -> Data()
-        let attributedMemoData     = try! NSKeyedArchiver.archivedData(withRootObject: inputAttrText, requiringSecureCoding: false)
-        memoObject.data            = attributedMemoData
+        memoObject.data            = try! NSKeyedArchiver.archivedData(withRootObject: inputAttrText, requiringSecureCoding: false)
         memoObject.identifier      = String().randomString()
         
         // Realm-Add

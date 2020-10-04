@@ -68,11 +68,9 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        let selectedMemo = memoListForRealm[indexPath.row]
-        
         //Realm-Delete
         try! realm.write() {
-            realm.delete(selectedMemo)
+            realm.delete(memoListForRealm[indexPath.row])
         }
         
         tableView.reloadData()
