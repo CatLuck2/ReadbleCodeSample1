@@ -15,7 +15,7 @@ class MemoModel: Object {
     @objc dynamic var identifier: String!
 }
 
-class AddMemo: UIViewController {
+final class AddMemo: UIViewController {
     
     @IBOutlet private weak var memoTextView: UITextView!
     
@@ -63,7 +63,7 @@ class AddMemo: UIViewController {
 }
 
 extension String {
-    fileprivate func randomString() -> String {
+    func randomString() -> String {
         // 文字群
         let characters       = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
         // 文字列の長さ

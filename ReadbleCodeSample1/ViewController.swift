@@ -9,7 +9,7 @@
 import UIKit
 import RealmSwift
 
-class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
+final class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     @IBOutlet private weak var memoTableView: UITableView!
     

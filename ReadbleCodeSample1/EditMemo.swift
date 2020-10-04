@@ -9,7 +9,7 @@
 import UIKit
 import RealmSwift
 
-class EditMemo: UIViewController {
+final class EditMemo: UIViewController {
     
     @IBOutlet private weak var memoTextView: UITextView!
     

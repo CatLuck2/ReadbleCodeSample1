@@ -9,7 +9,7 @@
 import UIKit
 import RealmSwift
 
-class DisplayMemo: UIViewController {
+final class DisplayMemo: UIViewController {
     
     @IBOutlet private weak var memoTextView: UITextView!
     // ViewControllerから値を受け取る
