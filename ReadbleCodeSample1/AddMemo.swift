@@ -31,10 +31,11 @@ final class AddMemo: UIViewController {
     }
     
     @IBAction private func addMemo(_ sender: Any) {
+
+        let memoObject             = MemoModel()
         guard let inputAttrText = memoTextView.attributedText else {
             return
         }
-        let memoObject             = MemoModel()
         // memoTextView.attributedText -> Data()
         memoObject.data            = try! NSKeyedArchiver.archivedData(withRootObject: inputAttrText, requiringSecureCoding: false)
         memoObject.identifier      = String().randomString()
@@ -54,8 +55,8 @@ final class AddMemo: UIViewController {
         let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
             self.present(self.imagePicker, animated: true, completion: nil)
         }
-        let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel, handler: nil)
         alert.addAction(okAction)
+        let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel, handler: nil)
         alert.addAction(cancelAction)
         present(alert, animated: true, completion: nil)
     }
@@ -85,20 +86,21 @@ extension AddMemo: UIImagePickerControllerDelegate, UINavigationControllerDelega
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let pickerImage = info[.originalImage] as? UIImage {
-            // NSAttributedString用のパラメーター
+            
             let width                 = pickerImage.size.width
             let padding               = self.view.frame.width / 2
             let scaleRate             = width / (memoTextView.frame.size.width - padding)
             // 10%に圧縮した画像
             let resizedImage          = pickerImage.resizeImage(withPercentage: 0.1)!
             let imageAttachment       = NSTextAttachment()
-            var imageAttributedString = NSAttributedString()
-            // memoTextView.attributedText -> NSMutableAttributedString()
-            let mutAttrMemoString     = NSMutableAttributedString(attributedString: memoTextView.attributedText)
-            
             // resizedImage -> NSAttributedString()
             imageAttachment.image = UIImage(cgImage: resizedImage.cgImage!, scale: scaleRate, orientation: resizedImage.imageOrientation)
+
+            var imageAttributedString = NSAttributedString()
             imageAttributedString = NSAttributedString(attachment: imageAttachment)
+
+            // memoTextView.attributedText -> NSMutableAttributedString()
+            let mutAttrMemoString     = NSMutableAttributedString(attributedString: memoTextView.attributedText)
             mutAttrMemoString.append(imageAttributedString)
             
             // 画像を追加後のテキスト -> memoTextView.attributedText
