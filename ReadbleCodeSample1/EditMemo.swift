@@ -11,11 +11,11 @@ import RealmSwift
 
 class EditMemo: UIViewController {
     
-    @IBOutlet weak var memoTextView: UITextView!
+    @IBOutlet private weak var memoTextView: UITextView!
     
     // Realm
-    let realm                       = try! Realm()
-    let imagePicker                 = UIImagePickerController()
+    private let realm                       = try! Realm()
+    private let imagePicker                 = UIImagePickerController()
     // ViewControllerで選択されたメモのデータ群
     var selectedMemoObject          = MemoModel()
     var selectedMemoString          = NSAttributedString()
@@ -31,7 +31,7 @@ class EditMemo: UIViewController {
     }
     
     // 長押しタップ -> アラート表示 -> ImagePicker起動
-    @IBAction func attachImageGesture(_ sender: UILongPressGestureRecognizer) {
+    @IBAction private func attachImageGesture(_ sender: UILongPressGestureRecognizer) {
         let alert = UIAlertController(title: "画像を添付", message: nil, preferredStyle: .actionSheet)
         let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
             self.present(self.imagePicker, animated: true, completion: nil)
@@ -42,7 +42,7 @@ class EditMemo: UIViewController {
         present(alert, animated: true, completion: nil)
     }
     
-    @IBAction func updateMemo(_ sender: Any) {
+    @IBAction private func updateMemo(_ sender: Any) {
         // memoTextView.attributedText -> Data()
         let editedMemoTextData = try! NSKeyedArchiver.archivedData(withRootObject: memoTextView.attributedText!, requiringSecureCoding: false)
         // Realm内のデータを参照
