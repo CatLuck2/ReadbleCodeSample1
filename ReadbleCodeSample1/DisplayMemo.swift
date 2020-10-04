@@ -11,7 +11,7 @@ import RealmSwift
 
 class DisplayMemo: UIViewController {
     
-    @IBOutlet weak var memoTextView: UITextView!
+    @IBOutlet private weak var memoTextView: UITextView!
     // ViewControllerから値を受け取る
     var selectedMemoObject          = MemoModel()
     var selectedMemoString          = NSAttributedString()
