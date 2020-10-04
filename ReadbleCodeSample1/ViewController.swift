@@ -83,9 +83,12 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         if segue.identifier == "display" {
             // DisplayMemoに選択したメモを渡す
             let vc = segue.destination as! DisplayMemo
-            vc.selectedMemoObject          = memoListForRealm[memoTableView.indexPathForSelectedRow!.row]
-            vc.selectedMemoString          = memoList[memoTableView.indexPathForSelectedRow!.row]
-            vc.selectedIndexPathRow        = memoTableView.indexPathForSelectedRow!.row
+            guard let indexPathRow = memoTableView.indexPathForSelectedRow?.row else {
+                return
+            }
+            vc.selectedMemoObject          = memoListForRealm[indexPathRow]
+            vc.selectedMemoString          = memoList[indexPathRow]
+            vc.selectedIndexPathRow        = indexPathRow
         }
     }
 

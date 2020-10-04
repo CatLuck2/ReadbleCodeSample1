@@ -31,9 +31,10 @@ class AddMemo: UIViewController {
     }
     
     @IBAction func addMemo(_ sender: Any) {
+        guard let inputAttrText = memoTextView.attributedText else { return }
         let memoObject             = MemoModel()
         // memoTextView.attributedText -> Data()
-        let attributedMemoData     = try! NSKeyedArchiver.archivedData(withRootObject: memoTextView.attributedText!, requiringSecureCoding: false)
+        let attributedMemoData     = try! NSKeyedArchiver.archivedData(withRootObject: inputAttrText, requiringSecureCoding: false)
         memoObject.data            = attributedMemoData
         memoObject.identifier      = String().randomString()
         
